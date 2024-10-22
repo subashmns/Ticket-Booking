@@ -37,7 +37,7 @@ const Login = () => {
       <div className="container shadow p-5 rounded mt-5" >
         <div className="row">
           <div className="col-lg-7 d-flex flex-column align-items-center justify-content-center">
-            <h1 className='text-danger'>Register Now </h1>
+            <h1 className='text-danger'>Movie Now </h1>
             <p className='text-center'>Lorem ipsum, dolor sit amet consectetur adipisicing elit.<br/> Deleniti, dignissimos minima! Nostrum assumenda amet numquam sunt libero, vel <br/>   quas, sequi voluptates deleniti veritatis corporis neque velit vitae dolor voluptatum dicta.</p>
           </div>
           <div className="col-lg-5">
