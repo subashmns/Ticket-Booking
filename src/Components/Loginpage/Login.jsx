@@ -48,7 +48,7 @@ const Login = () => {
                 <button type='button' className='btn btn-outline-secondary w-100 fs-4 my-3'>
                   <LoginSocialGoogle
                     client_id="859053594175-ofg9p7ekck1klvlcivr9tj9mgos7b2os.apps.googleusercontent.com"
-                    access_type='offline'
+                    access_type='online'
                     onResolve={(response) => {
 
                       localStorage.setItem("google_email", JSON.stringify(response));
