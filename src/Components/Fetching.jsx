@@ -16,9 +16,7 @@ const Fetching = (props) => {
     }
     catch (err) {
       console.log(err);
-      // Show error message here if necessary.
     }
-
   }
 
   const filtering = setData.filter((product) => {
@@ -29,29 +27,31 @@ const Fetching = (props) => {
     return matchesSearch;
   })
 
-
   return (
     <>
       {setData.length === 0 && <p>Loading...</p>}
 
+      <div className="container-fluid">
 
-      <div className="container  ">
-        <div className='row mx-auto'>
+        <div className='row g-3'>
           {filtering.map((item) => {
             return (
-              <React.Fragment key={item.id}>
-                <div className=' col-sm-6 col-md-3 col-lg-3 col-xl-3 '>
-                  <ProductCard name={item.name} img={item.image} releasedate={item.releasedate} ticketprice={item.ticketprice} director ={item.director} id ={item._id}/>
-                </div>
-              </React.Fragment>
+              <div key={item.id} className='col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3'>
+                <ProductCard 
+                  name={item.name} 
+                  img={item.image} 
+                  releasedate={item.releasedate} 
+                  ticketprice={item.ticketprice} 
+                  director={item.director} 
+                  id={item._id}
+                />
+              </div>
             )
           })}
         </div>
       </div>
-
-
     </>
   )
 }
 
-export default Fetching
+export default Fetching;
