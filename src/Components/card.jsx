@@ -1,63 +1,88 @@
 import * as React from 'react';
-import Button from '@mui/joy/Button';
-import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
-import Link from '@mui/joy/Link';
-import Typography from '@mui/joy/Typography';
+import { Card, CardMedia, CardContent, CardActions, Typography, Button } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import { Card } from 'antd';
-import {Link as Links} from 'react-router-dom';
 
-
-export default function ProductCard(props) {
-
+export default function ProductCard({ id, img, name, director, releasedate, ticketprice }) {
   return (
-    <Card
-      className=' mx-0 mx-sm-2'
-      hoverable
-      style={{
-        width: 290,
-        marginTop: '14px',
+    <Card 
+      sx={{
+        width: 300, 
+        height: 700, 
+        mx: 'auto',
+        my: 2,
+        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)', 
+        borderRadius: 3,
+        transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        '&:hover': { 
+          transform: 'scale(1.05)', 
+          boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)' 
+        },
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, #1e1e2f 20%, #28293d 80%)',
       }}
-      cover={<img alt="example" src={props.img} />}
     >
-      <CardOverflow key={props.key}>
-        <Typography level="body-xs">Director : {props.director}</Typography>
-      </CardOverflow>
-      <CardContent>
-      <Links to={`/product/${props.id}`}>
-          <Link
-            href="#product-card"
-            color="neutral"
-            textColor="text.primary"
-            overlay
-            endDecorator={<ArrowOutwardIcon />}
-            sx={{ fontWeight: 'md' }}
+      <div 
+        style={{
+          width: '100%',
+          height: 450, 
+          backgroundImage: `url(${img})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
 
-          >
-            
-            {props.name}
-          </Link>
-        </Links>
-        <Typography level="body-sm" className='mt-2'>
-          releasedate: {props.releasedate}
+      <CardContent sx={{ p: 2, color: 'white', textAlign: 'center' }}>
+        <Typography variant="subtitle2" color="gray">
+          🎬 Director: {director}
         </Typography>
-        <Typography
-          level="title-lg"
-          sx={{ mt: 1, fontWeight: 'xl' }}
-          className='my-2'
-        >
-          Ticket Price : {props.ticketprice} USD
+
+
+        <RouterLink to={`/product/${id}`} style={{ textDecoration: 'none' }}>
+          <Typography 
+            variant="h6" 
+            component="div" 
+            sx={{ 
+              fontWeight: 'bold', 
+              mt: 1, 
+              color: 'white',
+              whiteSpace: 'nowrap', 
+              overflow: 'hidden', 
+              textOverflow: 'ellipsis', 
+            }}
+          >
+            {name} <ArrowOutwardIcon sx={{ fontSize: 16 }} />
+          </Typography>
+        </RouterLink>
+
+        <Typography variant="body2" color="lightgray" sx={{ mt: 1,overflow: 'hidden', textOverflow: 'ellipsis', fontSize:12,}}>
+          🗓 Release Date: {releasedate}
+        </Typography>
+
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#ff5555', mt: 1 }}>
+          💵 Ticket Price: ${ticketprice}
         </Typography>
       </CardContent>
 
-      <CardOverflow>
-          <Links to={`/product/${props.id}`}>
-          <Button variant="solid" color="danger" size="lg" style={{ marginTop: "10px" }} >
-            Book Now
-          </Button>
-          </Links>
-      </CardOverflow>
+      {/* Booking Button */}
+      <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+        <Button 
+          component={RouterLink} 
+          to={`/product/${id}`} 
+          variant="contained" 
+          color="error"
+          size="large"
+          sx={{ 
+            borderRadius: 8, 
+            px: 3,
+            transition: 'background 0.3s ease-in-out',
+            '&:hover': { background: '#ff3333' },
+          }}
+        >
+          🎟 Book Now
+        </Button>
+      </CardActions>
     </Card>
   );
 }

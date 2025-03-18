@@ -1,0 +1,25 @@
+/* CSS file or in-line styles */
+.carousel-container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .carousel .slick-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 768px) {
+    .carousel-container {
+      width: 90%; /* Adjust width on smaller screens */
+      height: 300px; /* Reduce height for mobile devices */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carousel-container {
+      height: 250px; /* Further reduce height on very small screens */
+    }
+  }
+  

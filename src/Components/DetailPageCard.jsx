@@ -1,89 +1,126 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Card } from 'antd';
+import { Button, Typography, Box, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { cartCreate } from "../CartContext";
 
-
-
 const DetailPageCard = () => {
-    const [details, setDetails] = useState("");
+    const [details, setDetails] = useState(null);
     const { _id } = useParams();
-
-    const {addCart, setCart} = useContext(cartCreate)
-
-
-    const addCard = () => {
-        const newCart = [...addCart, details]
-        setCart(newCart)
-    }
-
-        const removeCard = () => {
-            const newCart =addCart.filter(item => item._id !== details._id)
-            setCart(newCart)
-        }
-
+    const { addCart, setCart } = useContext(cartCreate);
+    const [ticketCount, setTicketCount] = useState(0);
 
     useEffect(() => {
-        const fetching = async () => {
+        const fetchMovieDetails = async () => {
             try {
                 const response = await axios.get(`https://backend-crud-one.vercel.app/product/${_id}`);
                 setDetails(response.data);
-                
+            } catch (err) {
+                console.error("Error fetching movie details:", err);
             }
-            catch (err) {
-                console.log(err);
-                // Show error message here if necessary.
-            }
-    
-        }
-        fetching();
+        };
+        fetchMovieDetails();
     }, [_id]);
 
-    // Check if `details` is loaded properly before rendering the card
-    if (!details || !details._id) {
-        return <div>Loading...</div>; // Show a loading message or skeleton UI
+    if (!details) {
+        return <Typography variant="h5" sx={{ textAlign: "center", marginTop: "20px" }}>Loading...</Typography>;
     }
 
+    const addToCart = () => {
+        setTicketCount(ticketCount + 1);
+        setCart([...addCart, details]);
+    };
+
+    const removeFromCart = () => {
+        if (ticketCount > 0) {
+            setTicketCount(ticketCount - 1);
+            const index = addCart.findIndex(item => item._id === details._id);
+            if (index !== -1) {
+                setCart(addCart.filter((_, i) => i !== index));
+            }
+        }
+    };
+
     return (
-        <>
-            <div className="container my-5 py-5 " key={details._id} >
-                <div className="row">
-                    <div className="col-md-6 d-flex align-items-center justify-content-center position-relative"
-                    
+        <Box
+            sx={{
+                position: "relative",
+                width: "100%",
+                height: "120vh",
+                display: "flex",
+                backgroundImage: `url(${details.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                justifyContent: "center",
+                alignItems: "center",
+                // paddingTop: "80px",
+                "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background: "rgba(0, 0, 0, 0.6)", // Dark overlay for readability
+                }
+            }}
+        >
+            <Box
+                sx={{
+                    // position: "absolute",
+                    // right: 0, 
+                    maxWidth: "500px",
+                    color: "white",
+                    padding: 4,
+                    borderRadius: 3,
+                    zIndex: 10,
+                }}
+            >
+                <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>{details.name}</Typography>
+                <Typography variant="h6">🎬 Director: {details.director}</Typography>
+                <Typography variant="h6">🗓 Release Date: {details.releasedate}</Typography>
+                <Typography variant="h6">💰 Budget: ${details.budget}</Typography>
+                <Typography variant="h5" sx={{ color: "#ff5555", mt: 2 }}>🎟 Ticket Price: ${details.ticketprice}</Typography>
+
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                    {details.description}
+                </Typography>
+
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 3 }}>
+                    <IconButton
+                        color="error"
+                        onClick={removeFromCart}
+                        disabled={ticketCount === 0}
+                        sx={{ borderRadius: "50%", border: "2px solid red", color: "white" }}
                     >
-                        <Card
-                            className=' mx-0 mx-sm-2'
-                            hoverable
-                            style={{
-                                width: 290,
-                                marginTop: '14px',
-                                boxShadow:'10px 10px 10px'
-                            }}
-                            cover={<img alt={details.name} src={details.image} className="img-fluid" />}
-                        >
-                            <Card.Meta title={details.name} />
-                        </Card>
-                    </div>
-                    <div className="col-md-6 p-4">
-                        <h2>{details.name}</h2>
-                        <p>{details.description}</p>
-                        <h4>Price: {details.ticketprice} USD</h4>
-                        <h4>Director : {details.director} </h4>
-                        <h4>Release Date : {details.releasedate} </h4>
-                        <h4>Budget : {details.budget} </h4>
-                        <div className="my-4">
-                            {addCart.some(item => item._id === details._id) ? (
-                                <button className="btn btn-success me-4" onClick={removeCard}>Remove From Cart</button>) : (
-                                <button className="btn btn-danger  me-4" onClick={addCard}>Add to Cart</button>
-                                )}
-                            <button className="btn btn-primary ">Book Tickets</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
+                        <RemoveIcon />
+                    </IconButton>
+                    <Typography variant="h6" sx={{ mx: 2 }}>{ticketCount}</Typography>
+                    <IconButton
+                        color="success"
+                        onClick={addToCart}
+                        sx={{ borderRadius: "50%", border: "2px solid red", color: "darkgreen" }}
+                    >
+                        <AddIcon />
+                    </IconButton>
+                </Box>
+
+                <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        size="large"
+                        sx={{ mt: 3, borderRadius: 8, }}
+                    >
+                        🎟 Book {ticketCount} Tickets
+                    </Button>
+                </Box>
+            </Box>
+        </Box>
+    );
+};
 
 export default DetailPageCard;

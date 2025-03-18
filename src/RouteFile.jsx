@@ -3,6 +3,7 @@ import { Breadcrumb, Layout, theme } from 'antd';
 import Carousels from './Components/Carousels';
 import Fetching from './Components/Fetching';
 import Nav from './Components/Common/Nav';
+import { auto, right } from '@popperjs/core';
 const { Content, Footer } = Layout;
 
 const RouteFile = () => {
@@ -25,12 +26,9 @@ const breadcrumbItems = [
       
         <Nav setSearch =  {setSearch} no = '/home' />
       
-      <Content
-        style={{
-          padding: '0 48px',
-        }}
-      >
+     
         <Breadcrumb
+        className='ms-3'
           style={{
             margin: '16px 0',
           }}
@@ -50,7 +48,7 @@ const breadcrumbItems = [
           <Fetching search = {search} />
           
         </div>
-      </Content>
+      
       <Footer
         style={{
           textAlign: 'center',

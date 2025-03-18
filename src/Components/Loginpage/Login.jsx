@@ -1,107 +1,95 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { LoginSocialGoogle } from 'reactjs-social-login'
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LoginSocialGoogle } from 'reactjs-social-login';
 import { cartCreate } from '../../CartContext';
-// import RouteFile from '../../RouteFile'
-
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setUserEmail, setUserPassword, setGoogleEmail } = useContext(cartCreate)
+  const { setUserEmail, setUserPassword, setGoogleEmail } = useContext(cartCreate);
 
-  const handelClick = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
-    if (email === "test@gmail.com" && password === "123") {
-      localStorage.setItem("userEmail", JSON.stringify(email));
-      localStorage.setItem("userPassword", JSON.stringify(password));
-      console.log('Logged in as:', email);
-      console.log('Password:', password);
+    if (email === 'test@gmail.com' && password === '123') {
+      localStorage.setItem('userEmail', JSON.stringify(email));
+      localStorage.setItem('userPassword', JSON.stringify(password));
       setUserEmail(email);
       setUserPassword(password);
-
       alert('Login successful!');
-      setTimeout(() => {
-        navigate('/home');
-      }, 500);
-    }
-    else {
+      setTimeout(() => navigate('/home'), 500);
+    } else {
       alert('Invalid email or password');
     }
-
   };
 
   return (
-    <>
-      <div className="container shadow p-5 rounded mt-5" >
-        <div className="row">
-          <div className="col-lg-7 d-flex flex-column align-items-center justify-content-center">
-            <h1 className='text-danger'>Movie Now </h1>
-            <p className='text-center'>Lorem ipsum, dolor sit amet consectetur adipisicing elit.<br/> Deleniti, dignissimos minima! Nostrum assumenda amet numquam sunt libero, vel <br/>   quas, sequi voluptates deleniti veritatis corporis neque velit vitae dolor voluptatum dicta.</p>
-          </div>
-          <div className="col-lg-5">
-            <div className="container shadow p-5 rounded-5">
-              <h1 className='text-center'>Login</h1>
-
-              <form onSubmit={handelClick}>
-                <button type='button' className='btn btn-outline-secondary w-100 fs-4 my-3'>
-                  <LoginSocialGoogle
-                    client_id="859053594175-ofg9p7ekck1klvlcivr9tj9mgos7b2os.apps.googleusercontent.com"
-                    access_type='online'
-                    onResolve={(response) => {
-
-                      localStorage.setItem("google_email", JSON.stringify(response));
-                      setGoogleEmail(response)
-                      navigate('/home');
-                    }}
-                    onReject={(err) => {
-                      console.error(err)
-                    }}
-                  >
-                    <span><i className="fa-brands fa-google fs-4" style={{ color: '#4285F4', fontSize: '20px', marginRight: '8px' }}></i> </span>
-                    <span style={{ color: '#4285F4' }}>G</span>
-                    <span style={{ color: '#DB4437' }}>o</span>
-                    <span style={{ color: '#F4B400' }}>o</span>
-                    <span style={{ color: '#4285F4' }}>g</span>
-                    <span style={{ color: '#0F9D58' }}>l</span>
-                    <span style={{ color: '#DB4437' }}>e</span>
-                  </LoginSocialGoogle>
-                </button>
-                <div className="form-group p-2 my-2">
-                  <label htmlFor="username" className='mb-2'>Email :</label>
-                  <input type="text"
-                    className="form-control"
-                    id="username"
-                    placeholder="Enter Your Email"
-                    value={email}  //value from state to update the input field dynamically
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }} />
-                </div>
-                <div className="form-group p-2 my-2">
-                  <label htmlFor="password" className='mb-2'>Password :</label>
-                  <input type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }} />
-                </div>
-                <div className="justify-content-center d-flex pt-3">
-                  <button type="submit" className="btn btn-primary w-50">Login</button>
-                </div>
-                <div className="text-center p-2">Don't have an account? <a href="/signup" alt="register" className='text-decoration-none'>Register</a></div>
-                <div className="text-center p-2">Forgot Password? <a href="/forgotpassword" alt="reset" className='text-decoration-none'>Reset Password</a></div>
-              </form>
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="row w-100 justify-content-center">
+        <div className="col-md-8 col-lg-6">
+          <div className="card shadow-lg border-0 rounded-4">
+            <div className="row g-0">
+              <div className="col-md-5 bg-primary text-white d-flex flex-column justify-content-center align-items-center p-4 rounded-start-4">
+                <h2 className="fw-bold">Welcome Back!</h2>
+                <p className="text-center">Sign in to continue enjoying our movie platform.</p>
+              </div>
+              <div className="col-md-7 p-4 bg-white rounded-end-4">
+                <h3 className="text-center fw-bold mb-3">Login</h3>
+                <form onSubmit={handleClick}>
+                  <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary w-100">Login</button>
+                  <button type="button" className="btn btn-outline-dark w-100 mt-2 d-flex align-items-center justify-content-center">
+                    <LoginSocialGoogle
+                      client_id="859053594175-ofg9p7ekck1klvlcivr9tj9mgos7b2os.apps.googleusercontent.com"
+                      access_type="online"
+                      onResolve={(response) => {
+                        localStorage.setItem('google_email', JSON.stringify(response));
+                        setGoogleEmail(response);
+                        navigate('/home');
+                      }}
+                      onReject={(err) => console.error(err)}
+                    >
+                      <i className="fa-brands fa-google me-2" style={{ color: '#DB4437' }}></i>
+                      Sign in with Google
+                    </LoginSocialGoogle>
+                  </button>
+                  <div className="text-center mt-3">
+                    <p>
+                      Don't have an account? <a href="/signup" className="text-primary">Register</a>
+                    </p>
+                    <p>
+                      Forgot Password? <a href="/forgotpassword" className="text-primary">Reset Password</a>
+                    </p>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Login
+export default Login;

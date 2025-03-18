@@ -35,19 +35,19 @@ const Fetching = (props) => {
       {setData.length === 0 && <p>Loading...</p>}
 
 
-      {/* <div className="container "> */}
-        <div className='row'>
+      <div className="container  ">
+        <div className='row mx-auto'>
           {filtering.map((item) => {
             return (
               <React.Fragment key={item.id}>
-                <div className='col-sm-6 col-lg-4 col-xl-3'>
+                <div className=' col-sm-6 col-lg-4 col-xl-3'>
                   <ProductCard name={item.name} img={item.image} releasedate={item.releasedate} ticketprice={item.ticketprice} director ={item.director} id ={item._id}/>
                 </div>
               </React.Fragment>
             )
           })}
         </div>
-      {/* </div> */}
+      </div>
 
 
     </>

@@ -21,16 +21,12 @@ const [search, setSearch] = useState('');
         <Nav setSearch = {setSearch} no = {values} search ={search} />
       
       <Content
-        style={{
-          padding: '0 48px',
-        }}
+        
       >
           
         <div
           style={{
             background: colorBgContainer,
-            minHeight: 280,
-            padding: 24,
             borderRadius: borderRadiusLG,
             height:`100%`
           }}
@@ -39,13 +35,7 @@ const [search, setSearch] = useState('');
           
         </div>
       </Content>
-      <Footer
-        style={{
-          textAlign: 'center',
-        }}
-      >
-       Ticket Book Now ©{new Date().getFullYear()} Created by Subash Ebanezer
-      </Footer>
+      
     </Layout>
   );
 };
