@@ -40,7 +40,7 @@ const Fetching = (props) => {
           {filtering.map((item) => {
             return (
               <React.Fragment key={item.id}>
-                <div className=' col-sm-6 col-lg-3 col-xl-3 '>
+                <div className=' col-sm-6 col-md-3 col-lg-3 col-xl-3 '>
                   <ProductCard name={item.name} img={item.image} releasedate={item.releasedate} ticketprice={item.ticketprice} director ={item.director} id ={item._id}/>
                 </div>
               </React.Fragment>
